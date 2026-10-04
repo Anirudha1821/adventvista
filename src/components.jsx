@@ -194,12 +194,12 @@ export function ProjectCard({ project, large = false }) {
   return <article className={`project-card ${large ? 'project-card-large' : ''}`}><MediaCarousel key={project.mediaSource || 'fallback'} photos={project.images || [project.image]} label={project.client} className="project-image" to={`/work/${project.id}`} /><div className="project-meta"><div><span>{project.category}</span><h3><Link to={`/work/${project.id}`}>{project.client}</Link></h3></div><Link to={`/work/${project.id}`} className="project-index">Read case study ↗</Link></div></article>;
 }
 
-export function ContinuousGallery({ photos, label, isIllustrative = true }) {
+export function ContinuousGallery({ photos, label, isIllustrative = true, eyebrow = 'Through the lens', heading, description }) {
   const items = photos?.length ? photos : [];
   // Each half must be wider than the viewport, even when the owner publishes one photo.
   const sequence = items.length ? Array.from({ length: Math.ceil(3 / items.length) }, () => items).flat() : [];
   return <section className="continuous-gallery" aria-label={`${label} continuously scrolling image gallery`}>
-    <div className="container continuous-gallery-heading"><div><p className="eyebrow">Through the lens</p><h2>{label}<span className="hero-period">.</span></h2></div><div><p>{isIllustrative ? 'Illustrative visual directions. Approved project photography can replace these images later.' : 'Selected visuals for this spotlight.'}</p><a href={brand.instagram} target="_blank" rel="noopener noreferrer">Open Instagram ↗</a></div></div>
+    <div className="container continuous-gallery-heading"><div><p className="eyebrow">{eyebrow}</p><h2>{heading || <>{label}<span className="hero-period">.</span></>}</h2></div><div><p>{description || (isIllustrative ? 'Illustrative visual directions. Approved project photography can replace these images later.' : 'Selected visuals for this spotlight.')}</p><a href={brand.instagram} target="_blank" rel="noopener noreferrer">Open Instagram ↗</a></div></div>
     <div className="continuous-gallery-window"><div className="continuous-gallery-track">{[0, 1].map(copy => <div className="continuous-gallery-group" key={copy} aria-hidden={copy === 1}>{sequence.map((photo, index) => {
       const duplicate = copy === 1 || index >= items.length;
       return <a className="continuous-gallery-tile" href={brand.instagram} target="_blank" rel="noopener noreferrer" tabIndex={duplicate ? -1 : 0} aria-hidden={duplicate} aria-label={duplicate ? undefined : `Open Instagram from ${label} image ${index + 1}`} key={`${copy}-${index}`}><img src={typeof photo === 'string' ? photo : photo.url} alt={duplicate ? '' : (photo.alt || `${label} image ${index + 1}`)} loading="lazy" draggable="false" /></a>;
@@ -261,6 +261,7 @@ export function DiscoveryCallForm() {
   };
   return <form className="contact-form" onSubmit={submit}><div className="form-intro"><span className="eyebrow">Start a conversation</span><h2>Tell us about<br /><em>your brand.</em></h2><p>Share a little about your business. We’ll take it from there.</p></div>
     <div className="form-grid"><label>YOUR NAME *<input name="name" required autoComplete="name" placeholder="Your name" /></label><label>BUSINESS NAME *<input name="business" required autoComplete="organization" placeholder="Your business" /></label><label>PHONE *<input name="phone" type="tel" required autoComplete="tel" placeholder="+91" /></label><label>EMAIL *<input name="email" type="email" required autoComplete="email" placeholder="you@business.com" /></label><label className="full">WEBSITE OR INSTAGRAM<input name="website" type="text" placeholder="Your website or social profile" /></label><label>BUSINESS TYPE *<select name="type" required defaultValue=""><option value="" disabled>Select your business</option><option>Restaurant</option><option>Café</option><option>Hotel / Resort</option><option>Food brand</option><option>Other hospitality</option><option>Other</option></select></label><label>ESTIMATED BUDGET<select name="budget" defaultValue=""><option value="">Prefer to discuss</option><option>Under ₹50,000</option><option>₹50,000–₹1,00,000</option><option>₹1,00,000–₹3,00,000</option><option>₹3,00,000+</option></select></label></div>
+    <br />
     <fieldset className="service-checks"><legend>WHAT DO YOU NEED HELP WITH?</legend><div>{options.map(option => <label key={option}><input type="checkbox" checked={selected.includes(option)} onChange={() => toggle(option)} /><span>{option}</span></label>)}</div></fieldset>
     <label className="message-label">TELL US MORE<textarea name="message" rows="4" placeholder="What are you working on? What would success look like?" /></label>
     <button type="submit" className="button-dark">Prepare inquiry email <span aria-hidden="true">↗</span></button><p className="form-helper">This opens a draft in your email app. Your inquiry is sent when you send that email.</p>{message && <p className="form-status" role="status">{message} <a href={`mailto:${brand.email}`}>{brand.email}</a></p>}
@@ -294,7 +295,7 @@ export function FreeAuditForm() {
       <label>BUSINESS NAME *<input name="business" required autoComplete="organization" placeholder="Your business" /></label>
       <label>EMAIL FOR THE PDF *<input name="email" type="email" required autoComplete="email" placeholder="you@business.com" /></label>
       <label>PHONE *<input name="phone" type="tel" required autoComplete="tel" placeholder="+91" /></label>
-      <label className="full">INSTAGRAM HANDLE OR PROFILE URL *<input name="instagram" required placeholder="@yourbusiness or instagram.com/yourbusiness" /></label>
+      <label className="full">INSTAGRAM HANDLE OR PROFILE URL *<input name="instagram" required placeholder="@yourbusiness or profile URL" /></label>
       <label>BUSINESS TYPE *<select name="type" required defaultValue=""><option value="" disabled>Select your business</option><option>Restaurant</option><option>Café</option><option>Hotel / Resort</option><option>Food brand</option><option>Other hospitality</option><option>Other</option></select></label>
       <label>LOCATION<input name="location" placeholder="City, state" /></label>
       <label className="full">WEBSITE<input name="website" type="url" placeholder="https://yourbusiness.com" /></label>

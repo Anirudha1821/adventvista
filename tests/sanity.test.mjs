@@ -16,7 +16,7 @@ test('Studio gallery targets match every project and service on the site', () =>
 
 test('published images replace only their matching gallery and first photo becomes the cover', () => {
   const content = mergeSanityGalleries([
-    { _id: 'projectGallery-tuljai-idli', illustrative: false, images: [asset('first'), asset('second')], caseStudy: { headline: 'A fresh food story', results: '' } },
+    { _id: 'projectGallery-tuljai-idli', illustrative: false, images: [asset('first'), asset('second')], caseStudy: { headline: 'A fresh food story', brandStory: 'A client-approved story.', results: '', impactStats: [{ value: '42%', label: 'Verified growth' }, { value: '', label: 'Incomplete metric' }], appreciationImages: [asset('appreciation'), { url: 'javascript:alert(1)' }] } },
     { _id: 'serviceGallery-photography', illustrative: true, images: [asset('service')] },
     { _id: 'projectGallery-carnival-resorts', images: [{ url: 'javascript:alert(1)' }] },
   ]);
@@ -26,7 +26,11 @@ test('published images replace only their matching gallery and first photo becom
   assert.equal(content.projects[2].mediaSource, 'sanity');
   assert.equal(content.projects[2].isIllustrative, false);
   assert.equal(content.projects[2].caseStudy.headline, 'A fresh food story');
+  assert.equal(content.projects[2].caseStudy.brandStory, 'A client-approved story.');
   assert.equal(content.projects[2].caseStudy.results, undefined);
+  assert.deepEqual(content.projects[2].caseStudy.impactStats, [{ value: '42%', label: 'Verified growth' }]);
+  assert.match(content.projects[2].caseStudy.appreciationImages[0].url, /appreciation\.jpg\?w=1600/);
+  assert.equal(content.projects[2].caseStudy.appreciationImages.length, 1);
   assert.match(content.services[3].images[0].url, /service\.jpg\?w=1600/);
   assert.equal(content.services[3].isIllustrative, true);
   assert.equal(content.projects[0], projects[0]);

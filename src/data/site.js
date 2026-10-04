@@ -55,6 +55,33 @@ export const rebrandingOffer = {
   impact: 'A clearer, more consistent brand experience',
 };
 
+const caseStudyDrafts = {
+  'carnival-resorts': {
+    brandStory: 'A resort story starts long before a guest checks in. This spotlight considers the atmosphere, spaces and occasions that turn a stay into a destination worth imagining.',
+    creativeDirection: 'Wide views and intimate details present the destination as an experience, not just a property.',
+  },
+  'enrise-by-sayaji': {
+    brandStory: 'A memorable hotel presence should convey how a stay feels, from the first glance to the welcome at the door. This story centres on those small signals of care.',
+    creativeDirection: 'Warm interiors, thoughtful details and arrival moments shape the visual rhythm of the stay.',
+  },
+  'tuljai-idli': {
+    brandStory: 'Food stories can be built from the familiar. Tuljai Idli’s spotlight puts the simple pleasure of a meal at the centre, where appetite and everyday ritual meet.',
+    creativeDirection: 'Close-up textures and serving moments keep the food front and centre.',
+  },
+  'hotel-city-centre': {
+    brandStory: 'A hospitality venue can hold many experiences under one name. This story looks at how the spaces and occasions of Hotel City Centre can feel part of one identity.',
+    creativeDirection: 'The visual direction moves between interiors, table settings and shared moments to connect the whole place.',
+  },
+  'sanjay-quality': {
+    brandStory: 'The power of a local restaurant lies in the moments people return for. This spotlight pays attention to familiar dishes, generous tables and a sense of welcome.',
+    creativeDirection: 'Food, people and atmosphere create a warm editorial sequence around a familiar local name.',
+  },
+  'vfood-park': {
+    brandStory: 'A food destination brings many tastes and visits together. This spotlight explores how variety can become a recognizable, shareable story.',
+    creativeDirection: 'Colour, appetite and movement give each frame a reason to catch the eye.',
+  },
+};
+
 export const projects = [
   { id: 'carnival-resorts', client: 'Carnival Resorts', category: 'Resorts · Content', image: images.resort, images: [images.resort, images.hotel, images.dining], summary: 'A destination experience told through atmosphere, occasions and visual storytelling.', detail: 'A hospitality spotlight exploring how destination imagery and short-form content can make a stay feel worth planning.', tags: ['Hospitality', 'Photo & film'], status: 'Client spotlight' },
   { id: 'enrise-by-sayaji', client: 'Enrise by Sayaji', category: 'Hotels · Social', image: images.hotel, images: [images.hotel, images.resort, images.table], summary: 'Bringing the details of a stay into a more memorable digital presence.', detail: 'A hotel brand spotlight focused on the guest journey, from first impression to arrival.', tags: ['Hospitality', 'Social media'], status: 'Client spotlight' },
@@ -62,7 +89,7 @@ export const projects = [
   { id: 'hotel-city-centre', client: 'Hotel City Centre', category: 'Hospitality · Identity', image: images.dining, images: [images.dining, images.table, images.cafe], summary: 'A place with many experiences, brought into one clear visual story.', detail: 'A hospitality spotlight exploring how visual identity can connect individual experiences under one destination.', tags: ['Branding', 'Hospitality'], status: 'Client spotlight' },
   { id: 'sanjay-quality', client: 'Sanjay Quality Restaurant', category: 'Restaurant · Campaigns', image: images.table, images: [images.table, images.food, images.chef], summary: 'A familiar local favourite, seen through a fresh lens.', detail: 'A restaurant spotlight built around the people, food and moments that bring guests back.', tags: ['Restaurant', 'Campaigns'], status: 'Client spotlight' },
   { id: 'vfood-park', client: 'VFood Park', category: 'Food · Social', image: images.cafe, images: [images.cafe, images.plate, images.dessert], summary: 'A vibrant food destination with room for many stories.', detail: 'A food destination spotlight focused on variety, atmosphere and repeat discovery.', tags: ['Social media', 'Food & beverage'], status: 'Client spotlight' },
-];
+].map(project => ({ ...project, caseStudy: caseStudyDrafts[project.id] }));
 
 export const campaignConcepts = [
   { title: 'The weekend escape', sector: 'Resorts & hotels', objective: 'Make a stay feel like the start of a story.', channels: 'Reels · Social · Creator content', image: images.resort, images: [images.resort, images.hotel, images.table] },

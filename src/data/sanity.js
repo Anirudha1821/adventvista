@@ -4,7 +4,11 @@ import { galleryDocumentId } from './gallery-ids.js';
 const galleryQuery = `*[_type in ["projectGallery", "serviceGallery"]]{
   _id,
   illustrative,
-  "caseStudy": caseStudy{headline, challenge, approach, creative, results},
+  "caseStudy": caseStudy{
+    headline, brandStory, whatWeDid, creativeDirection, challenge, approach, creative, results,
+    impactStats[]{value, label}, appreciation, appreciationQuote, appreciationCredit,
+    "appreciationImages": appreciationImages[]{"url": asset->url, alt}
+  },
   "images": images[]{"url": asset->url, alt}
 }`;
 
@@ -16,9 +20,9 @@ export function sanityGalleryUrl(projectId, dataset = 'production', useDevProxy 
   return useDevProxy ? `/__sanity${url.pathname}${url.search}` : url.toString();
 }
 
-function galleryImages(document) {
-  if (!Array.isArray(document?.images)) return [];
-  return document.images
+function galleryImages(images) {
+  if (!Array.isArray(images)) return [];
+  return images
     .filter(image => typeof image?.url === 'string' && image.url.startsWith('https://cdn.sanity.io/images/'))
     .map(image => {
       const url = new URL(image.url);
@@ -34,8 +38,14 @@ export function mergeSanityGalleries(documents, projects = fallbackProjects, ser
   const byId = new Map((Array.isArray(documents) ? documents : []).map(document => [document?._id, document]));
   const withGallery = (item, type) => {
     const document = byId.get(galleryDocumentId(type, item.id));
-    const images = galleryImages(document);
+    const images = galleryImages(document?.images);
     const story = Object.fromEntries(Object.entries(document?.caseStudy || {}).filter(([, value]) => typeof value === 'string' && value.trim()));
+    const impactStats = Array.isArray(document?.caseStudy?.impactStats) ? document.caseStudy.impactStats
+      .filter(stat => typeof stat?.value === 'string' && stat.value.trim() && typeof stat?.label === 'string' && stat.label.trim())
+      .slice(0, 4).map(stat => ({ value: stat.value.trim(), label: stat.label.trim() })) : [];
+    const appreciationImages = galleryImages(document?.caseStudy?.appreciationImages);
+    if (impactStats.length) story.impactStats = impactStats;
+    if (appreciationImages.length) story.appreciationImages = appreciationImages;
     if (!images.length && !Object.keys(story).length) return item;
     return {
       ...item,
