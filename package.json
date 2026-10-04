@@ -1,0 +1,25 @@
+{
+  "name": "adventvista-revamp",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "node --test tests/*.test.mjs",
+    "preview": "vite preview",
+    "studio:dev": "npm --prefix studio run dev",
+    "studio:build": "npm --prefix studio run build",
+    "studio:deploy": "npm --prefix studio run deploy",
+    "studio:migrate": "npm --prefix studio run migrate:ids",
+    "studio:seed": "node studio/scripts/seed-galleries.mjs",
+    "studio:seed:prepare": "node studio/scripts/seed-galleries.mjs --prepare-only"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "vite": "^8.3.2"
+  }
+}

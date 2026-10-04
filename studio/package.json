@@ -1,0 +1,17 @@
+{
+  "name": "adventvista-studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "migrate:ids": "sanity exec scripts/migrate-gallery-ids.js --with-user-token"
+  },
+  "dependencies": {
+    "react": "^19.2.2",
+    "react-dom": "^19.2.2",
+    "sanity": "^6.17.0",
+    "styled-components": "^6.1.15"
+  }
+}

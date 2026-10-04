@@ -1,0 +1,24 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+.vite/
+.vercel/
+
+# Local credentials and configuration
+.env*
+!.env.example
+!studio/.env.example
+
+# Sanity and local test artifacts
+studio/.sanity/
+studio/.tmp/
+/.tmp/
+
+# Logs and editor/OS files
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
